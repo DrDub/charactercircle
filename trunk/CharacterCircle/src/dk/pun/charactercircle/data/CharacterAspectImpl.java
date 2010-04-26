@@ -1,5 +1,7 @@
 package dk.pun.charactercircle.data;
 
+import java.io.Serializable;
+
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Inheritance;
@@ -8,16 +10,18 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.Text;
-
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
 @Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
-public abstract class LogicalLevel {
+public class CharacterAspectImpl implements CharacterAspect, Serializable {
+
+	private static final long serialVersionUID = -3497588501728319168L;
 
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	private Key key;
+	private long id;
+	
+	@Persistent
+	private CharacterAspectType type;
 	
 	@Persistent
 	private String title;
@@ -26,21 +30,35 @@ public abstract class LogicalLevel {
 	private String summary;
 	
 	@Persistent
-	private Text description;
+	private String description;
 	
-	public LogicalLevel(String title, String summary) {
+	public CharacterAspectImpl() {
+		
+	}
+	
+	public CharacterAspectImpl(CharacterAspectType type, String title, String summary) {
+		this.setType(type);
 		this.setTitle(title);
 		this.setSummary(summary);
 	}
 
-	public LogicalLevel(String title, String summary, Text description) {
+	public CharacterAspectImpl(CharacterAspectType type, String title, String summary, String description) {
+		this.setType(type);
 		this.setTitle(title);
 		this.setSummary(summary);
 		this.setDescription(description);
 	}
 	
-	public Key getKey() {
-		return key;
+	public long getId() {
+		return id;
+	}
+
+	public void setType(CharacterAspectType type) {
+		this.type = type;
+	}
+
+	public CharacterAspectType getType() {
+		return this.type;
 	}
 
 	public void setTitle(String title) {
@@ -59,11 +77,11 @@ public abstract class LogicalLevel {
 		return summary;
 	}
 
-	public void setDescription(Text description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	public Text getDescription() {
+	public String getDescription() {
 		return description;
 	}
 
