@@ -4,21 +4,18 @@ import java.io.Serializable;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
-import javax.jdo.annotations.Inheritance;
-import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-@PersistenceCapable(identityType = IdentityType.APPLICATION)
-@Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
+@PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
 public class CharacterAspectImpl implements CharacterAspect, Serializable {
 
 	private static final long serialVersionUID = -3497588501728319168L;
 
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	private long id;
+	private Long id;
 	
 	@Persistent
 	private CharacterAspectType type;
@@ -49,7 +46,7 @@ public class CharacterAspectImpl implements CharacterAspect, Serializable {
 		this.setDescription(description);
 	}
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
