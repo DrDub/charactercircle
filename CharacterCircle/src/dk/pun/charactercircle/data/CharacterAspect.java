@@ -2,6 +2,8 @@ package dk.pun.charactercircle.data;
 
 public interface CharacterAspect {
 	
+	Long getId();
+	
 	CharacterAspectType getType();
 	
 	void setType(CharacterAspectType type);
