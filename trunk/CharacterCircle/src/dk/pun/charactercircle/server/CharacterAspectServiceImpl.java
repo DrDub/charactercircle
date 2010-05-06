@@ -1,5 +1,6 @@
 package dk.pun.charactercircle.server;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class CharacterAspectServiceImpl extends RemoteServiceServlet implements
 		return pmfInstance.getPersistenceManager();
 	}
 
-	public Long createCharacterAspect(CharacterAspect aspect) {
+	public Long addCharacterAspect(CharacterAspect aspect) {
 		PersistenceManager pm = getPersistenceManager();
 		Long id = null;
 		try {
@@ -55,14 +56,17 @@ public class CharacterAspectServiceImpl extends RemoteServiceServlet implements
 		return aspect;
 	}
 	
-	public Collection<CharacterAspect> getCharacterAspects() {
+	public List<CharacterAspect> getCharacterAspects() {
 		PersistenceManager pm = getPersistenceManager();
-		Collection<CharacterAspect> characterAspectsDetached = null;
+		List<CharacterAspect> characterAspectsDetached = new ArrayList<CharacterAspect>();
 		try {
 			Query query = pm.newQuery(CharacterAspectImpl.class);
 			List<CharacterAspect> characterAspects = (List<CharacterAspect>) query.execute();
 			if (characterAspects != null) {
-				characterAspectsDetached = pm.detachCopyAll(characterAspects);
+				Collection<CharacterAspect> characterAspectsCollection = pm.detachCopyAll(characterAspects);
+				for (CharacterAspect aspect : characterAspectsCollection) {
+					characterAspectsDetached.add(aspect);
+				}
 			}
 		} finally {
 			pm.close();
@@ -70,21 +74,33 @@ public class CharacterAspectServiceImpl extends RemoteServiceServlet implements
 		return characterAspectsDetached;
 	}
 
-	public void updateCharacterAspect(CharacterAspect aspect) {
+	public Boolean updateCharacterAspect(CharacterAspect aspect) {
 		PersistenceManager pm = getPersistenceManager();
 		try {
 			pm.makePersistent(aspect);
 		} finally {
 			pm.close();
 		}
+		return Boolean.TRUE;
 	}
 
-	public void deleteCharacterAspect(CharacterAspect aspect) {
+	public Boolean deleteCharacterAspect(Long id) {
 		PersistenceManager pm = getPersistenceManager();
 		try {
-			pm.deletePersistent(aspect);
+			pm.deletePersistent(id);
 		} finally {
 			pm.close();
 		}
+		return Boolean.TRUE;
+	}
+	
+	public Boolean deleteCharacterAspects(List<Long> ids) {
+		PersistenceManager pm = getPersistenceManager();
+		try {
+			pm.deletePersistentAll(ids);
+		} finally {
+			pm.close();
+		}
+		return Boolean.TRUE;
 	}
 }

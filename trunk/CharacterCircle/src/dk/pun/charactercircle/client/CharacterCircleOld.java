@@ -147,7 +147,7 @@ public class CharacterCircleOld implements EntryPoint {
 					textToServerLabel.setText(characterAspect.toString());
 					serverResponseLabel.setText("");
 					
-					characterAspectService.createCharacterAspect(
+					characterAspectService.addCharacterAspect(
 							characterAspect, new AsyncCallback<Long>() {
 								public void onFailure(Throwable caught) {
 									dialogBox

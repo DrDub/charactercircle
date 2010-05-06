@@ -37,7 +37,7 @@ public class CharacterAspectServiceTest {
 	@Test
 	public void createCharacterAspect() throws Exception {
 		CharacterAspect aspect = new CharacterAspectImpl(CharacterAspectType.Behaviour, "B1", "Blah...");
-		Long id = this.service.createCharacterAspect(aspect);
+		Long id = this.service.addCharacterAspect(aspect);
 		Assert.assertNotNull(aspect.getId());
 		Assert.assertNotNull(id);
 		Assert.assertEquals(id, aspect.getId());

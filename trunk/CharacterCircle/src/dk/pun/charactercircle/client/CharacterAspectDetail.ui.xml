@@ -17,6 +17,11 @@
 			margin-bottom: 0.5em;
 		}
 		
+		.headerButton {
+			margin-bottom: 0.5em;
+			align: right;
+		}
+		
 		.body {
 			line-height: 150%;
 			padding: 20px 40px 20px 10px;
@@ -25,7 +30,7 @@
 	</ui:style>
 
 	<g:DockLayoutPanel unit='EM' styleName='{style.detail}'>
-		<g:north size='6'>
+		<g:north size='7'>
 			<g:HTMLPanel styleName='{style.header}'>
 				<div class='{style.headerItem}'>
 					<span ui:field='type' />
@@ -36,8 +41,9 @@
 				<div class='{style.headerItem}'>
 					<span ui:field='summary' />
 				</div>
-				<div class='{style.headerItem}'>
+				<div class='{style.headerButton}'>
 					<g:Button ui:field='editButton'>Edit</g:Button>
+					<g:Button ui:field='deleteButton'>Delete</g:Button>
 				</div>
 			</g:HTMLPanel>
 		</g:north>
