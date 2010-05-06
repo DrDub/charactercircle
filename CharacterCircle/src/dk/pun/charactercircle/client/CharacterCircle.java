@@ -16,11 +16,6 @@ import com.google.gwt.user.client.ui.SimplePanel;
 
 import dk.pun.charactercircle.data.CharacterAspect;
 
-/**
- * This application demonstrates how to construct a relatively complex user
- * interface, similar to many common email readers. It has no back-end,
- * populating its components with hard-coded data.
- */
 public class CharacterCircle implements EntryPoint {
 
 	interface Binder extends UiBinder<DockLayoutPanel, CharacterCircle> {
@@ -43,33 +38,22 @@ public class CharacterCircle implements EntryPoint {
 	CharacterAspectDetail characterAspectDetail;
 	CharacterAspectEdit characterAspectEdit;
 
-	/**
-	 * This method constructs the application user interface by instantiating
-	 * controls and hooking up event handler.
-	 */
 	public void onModuleLoad() {
-		// Inject global styles.
 		GWT.<GlobalResources> create(GlobalResources.class).css().ensureInjected();
 
-		// Create the UI defined in Mail.ui.xml.
 		DockLayoutPanel outer = binder.createAndBindUi(this);
 
 		this.characterAspectDetail = new CharacterAspectDetail();
 		this.characterAspectEdit = new CharacterAspectEdit();
 
-		// Get rid of scrollbars, and clear out the window's built-in margin,
-		// because we want to take advantage of the entire client area.
 		Window.enableScrolling(false);
 		Window.setMargin("0px");
 
-		// Special-case stuff to make topPanel overhang a bit.
-		Element topElem = outer.getWidgetContainerElement(topPanel);
+		Element topElem = outer.getWidgetContainerElement(this.topPanel);
 		topElem.getStyle().setZIndex(2);
 		topElem.getStyle().setOverflow(Overflow.VISIBLE);
 
-		// Listen for item selection, displaying the currently-selected item in
-		// the detail area.
-		characterAspectList.setListener(new CharacterAspectList.Listener() {
+		this.characterAspectList.setListener(new CharacterAspectList.Listener() {
 			public void onCharacterAspectSelected(CharacterAspect aspect) {
 				characterAspectDetail.setCharacterAspect(aspect);
 			}
@@ -77,8 +61,6 @@ public class CharacterCircle implements EntryPoint {
 
 		this.showCharacterAspectDetail();
 
-		// Add the outer panel to the RootLayoutPanel, so that it will be
-		// displayed.
 		RootLayoutPanel root = RootLayoutPanel.get();
 		root.add(outer);
 	}
@@ -86,7 +68,7 @@ public class CharacterCircle implements EntryPoint {
 	public void showCharacterAspectDetail() {
 		this.characterAspectContent.setWidget(this.characterAspectDetail);
 	}
-	
+
 	public void showCharacterAspectEdit() {
 		this.characterAspectContent.setWidget(this.characterAspectEdit);
 	}

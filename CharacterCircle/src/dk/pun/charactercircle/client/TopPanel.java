@@ -15,9 +15,6 @@ import dk.pun.charactercircle.data.CharacterAspect;
 import dk.pun.charactercircle.data.CharacterAspectImpl;
 import dk.pun.charactercircle.data.CharacterAspectType;
 
-/**
- * The top panel, which contains the 'welcome' message and various links.
- */
 public class TopPanel extends Composite {
 
 	interface Binder extends UiBinder<Widget, TopPanel> {
@@ -44,22 +41,20 @@ public class TopPanel extends Composite {
 		newAspect.setType(CharacterAspectType.Behaviour);
 		newAspect.setTitle("New Character Aspect");
 		
-		characterAspectService.createCharacterAspect(newAspect, new AsyncCallback<Long>() {
+		this.characterAspectService.addCharacterAspect(newAspect, new AsyncCallback<Long>() {
 			public void onFailure(Throwable caught) {
 				Window.alert(caught.toString());
 			}
 
 			public void onSuccess(Long id) {
 				Window.alert("Created new character aspect with id " + id);
+				
 			}
 		});
 	}
 
 	@UiHandler("aboutLink")
 	void onAboutClicked(ClickEvent event) {
-		// When the 'About' item is selected, show the AboutDialog.
-		// Note that showing a dialog box does not block -- execution continues
-		// normally, and the dialog fires an event when it is closed.
 		AboutDialog dialog = new AboutDialog();
 		dialog.show();
 		dialog.center();

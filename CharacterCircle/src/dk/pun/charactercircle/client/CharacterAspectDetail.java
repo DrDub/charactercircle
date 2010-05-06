@@ -31,25 +31,27 @@ public class CharacterAspectDetail extends ResizeComposite {
 	HTML body;
 	@UiField
 	Button editButton;
+	@UiField
+	Button deleteButton;
 
 	public CharacterAspectDetail() {
-    initWidget(binder.createAndBindUi(this));
-    editButton.addClickHandler(new ClickHandler() {
-		public void onClick(ClickEvent event) {
-			Window.alert("Editing...");
-		}
-    });
-  }
+		initWidget(binder.createAndBindUi(this));
+		this.editButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				Window.alert("Editing...");
+			}
+		});
+		this.deleteButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				Window.alert("Deleting...");
+			}
+		});
+	}
 
 	public void setCharacterAspect(CharacterAspect aspect) {
 		type.setInnerText(aspect.getType().toString());
 		title.setInnerText(aspect.getTitle());
 		summary.setInnerHTML(aspect.getSummary());
-
-		// WARNING: For the purposes of this demo, we're using HTML directly, on
-		// the assumption that the "server" would have appropriately scrubbed
-		// the
-		// HTML. Failure to do so would open your application to XSS attacks.
 		body.setHTML(aspect.getDescription());
 	}
 }
