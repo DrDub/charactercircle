@@ -35,7 +35,7 @@ public class CharacterAspectServiceTest {
 	}
 	
 	@Test
-	public void createCharacterAspect() throws Exception {
+	public void testCharacterAspect() throws Exception {
 		CharacterAspect aspect = new CharacterAspectImpl(CharacterAspectType.Behaviour, "B1", "Blah...");
 		Long id = this.service.addCharacterAspect(aspect);
 		Assert.assertNotNull(aspect.getId());
@@ -54,5 +54,18 @@ public class CharacterAspectServiceTest {
 		CharacterAspect aspect2 = aspects.iterator().next();
 		Assert.assertEquals(CharacterAspectType.Behaviour, aspect2.getType());
 		Assert.assertEquals("B1", aspect2.getTitle());
+		
+		aspect3.setType(CharacterAspectType.Capability);
+		aspect3.setTitle("C1");
+		this.service.updateCharacterAspect(aspect3);
+		
+		CharacterAspect aspect4 = this.service.getCharacterAspect(aspect3.getId());
+		Assert.assertNotNull(aspect4);
+		Assert.assertEquals(CharacterAspectType.Capability, aspect4.getType());
+		Assert.assertEquals("C1", aspect4.getTitle());
+		
+		this.service.deleteCharacterAspect(aspect4.getId());
+		CharacterAspect aspect5 = this.service.getCharacterAspect(aspect4.getId());
+		Assert.assertNull(aspect5);		
 	}
 }

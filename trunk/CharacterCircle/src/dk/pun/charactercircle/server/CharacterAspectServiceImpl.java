@@ -87,7 +87,13 @@ public class CharacterAspectServiceImpl extends RemoteServiceServlet implements
 	public Boolean deleteCharacterAspect(Long id) {
 		PersistenceManager pm = getPersistenceManager();
 		try {
-			pm.deletePersistent(id);
+			Query query = pm.newQuery(CharacterAspectImpl.class);
+			query.setFilter("id == idParam");
+			query.declareParameters("Long idParam");
+			List<CharacterAspect> aspects = (List<CharacterAspect>) query.execute(id);
+			if (aspects.size() > 0) {
+				pm.deletePersistent(aspects.get(0));
+			}
 		} finally {
 			pm.close();
 		}
